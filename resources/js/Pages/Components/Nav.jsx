@@ -12,7 +12,7 @@ const Nav = () => {
             </div>
             <div id="navtop" className='flex justify-between w-4/5 m-auto items-center py-7 text-white'>
                 <img src="/images/logo.png" className='h-10' />
-                <ul className='navigation flex justify-around w-1/3'>
+                <ul className='navigation justify-around w-1/3 sm:hidden md:flex'>
                     <li>pricing</li>
                     <li>availability</li>
                     <li>services</li>

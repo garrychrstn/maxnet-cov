@@ -19,3 +19,7 @@ Route::get('/', function () {
 Route::get('/crud', function() {
     return inertia('Crud');
 });
+
+Route::get('/leaflet', function () {
+    return inertia('Leaflet');
+});
