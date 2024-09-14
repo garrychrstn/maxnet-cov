@@ -1,11 +1,42 @@
 import Nav from "./Components/Nav";
 import Plan from "./Components/Plan";
-import Leaflet from "./Leaflet";
+import LeafletMap from "./LeafletMap.jsx";
+import { useMap, useMapEvents } from "react-leaflet";
+import { useState } from "react";
 
 const Home = ({ packet }) => {
 
     let needs = ['streaming video', 'games', 'tasks']
 	
+    const [ltd, setLtd] = useState(null);
+    // const GetLocation = () => {
+    //     const [ltd, setLtd] = useState(null);
+    //     const loc = useMapEvents({
+    //         click() {
+    //             loc.locate()
+    //         },
+    //         locationfound(e) {
+    //             setLtd(e.latlng);
+    //         }
+    //     })
+    // }
+    function GetLocComp() {
+        console.log(('component trigerred'));
+        
+        const loc = useMapEvents({
+            click() {
+                loc.locate()
+            },
+            locationfound(e) {
+                setLtd(e.latlng);
+            }
+        })
+    }
+    function getLoc() {
+        // console.log('function is run');
+        return <GetLocComp />
+        
+    }
     return ( 
         <>
             <Nav />
@@ -22,8 +53,7 @@ const Home = ({ packet }) => {
             </div>
             <div className="tool-cov w-3/4 mx-auto mt-20">
                 <h1 className="text-txt text-2xl m-auto text-center mb-7">Check our availability</h1>
-                <button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10">SHOW MAP</button>
-                <Leaflet />
+                <LeafletMap />
             </div>
             <div id="map" className="min-h-20"></div>
             <div className="footer min-h-5 mt-20 bg-prim p-10">
