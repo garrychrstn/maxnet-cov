@@ -1,5 +1,6 @@
 import Nav from "./Components/Nav";
 import Plan from "./Components/Plan";
+import Leaflet from "./Leaflet";
 
 const Home = ({ packet }) => {
 
@@ -21,14 +22,13 @@ const Home = ({ packet }) => {
             </div>
             <div className="tool-cov w-3/4 mx-auto mt-20">
                 <h1 className="text-txt text-2xl m-auto text-center mb-7">Check our availability</h1>
-                <button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto">SHOW MAP</button>
-                <img src='/images/map.png' className="mt-7 rounded-md"/>
+                <button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10">SHOW MAP</button>
+                <Leaflet />
             </div>
             <div id="map" className="min-h-20"></div>
             <div className="footer min-h-5 mt-20 bg-prim p-10">
                 <p className="text-center text-txt">Copyright by Maxnet+</p>
             </div>
-            
         </>
      );
 }
