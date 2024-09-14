@@ -23,3 +23,7 @@ Route::get('/crud', function() {
 Route::get('/leaflet', function () {
     return inertia('Leaflet');
 });
+
+Route::post('/register-req', function() {
+    return inertia('Register');
+});

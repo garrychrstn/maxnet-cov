@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('packets', function (Blueprint $table) {
+        Schema::create('packet_templates', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->boolean('active');
-            $table->integer('price');
-            $table->integer('speed');
+            $table->string('name');
+            $table->date('start');
+            $table->date('end');
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('packets');
+        Schema::dropIfExists('packet_templates');
     }
 };
