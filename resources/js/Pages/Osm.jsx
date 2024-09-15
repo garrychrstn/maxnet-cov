@@ -6,7 +6,7 @@ const Osm = () => {
     let lat = '-7.557327198772382'
     let lon = '110.84773870390242'
     useEffect(() => {
-        axios.get('/', {
+        axios.get('/', { // '/' is mandatory
             param: {
                 format: 'jsonv2',
                 lat: lat,
