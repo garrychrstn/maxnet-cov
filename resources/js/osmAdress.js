@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const osmAddress = axios.create({
-    baseURL: 'https://nominatim.openstreetmap.org/reverse',
+    baseURL: 'https://nominatim.openstreetmap.org/',
     headers: {
         'Content-Type' : 'application/json',
     }

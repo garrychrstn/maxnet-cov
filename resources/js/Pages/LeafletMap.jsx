@@ -1,12 +1,18 @@
 import { MapContainer } from 'react-leaflet/MapContainer'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import osmAddress from '../osmAdress'
 
 const LeafletMap = () => {
-	const [ltd, setLtd] = useState();
+	const [leto, setleto] = useState([]);
+	const [lat, setLat] = useState();
 	const [fetchLocation, setFetchLocation] = useState(false);
+	const [custInfo, setcustInfo] = useState({
+		'packet' : 'undefined',
+		'address' : undefined,
+	})
+	let map_hidden = 'hidden'
 	let array_coordinate = [
 		{ name : 'pos1', la: '-7.588965925268359', long: '110.78278201288234'},
 		{ name : 'pos2', la: '-7.588473143069318', long: '110.78443027116379'},
@@ -20,7 +26,8 @@ const LeafletMap = () => {
 	  
 		if (fetchLocation) {
 		  map.locate().on('locationfound', function (e) {
-			console.log(`button : ${e.latlng}`); // Here you get the location coordinates
+			setleto([e.latlng.lat, e.latlng.lng])
+			console.log(`lat : ${leto[0]} & leto : ${leto[1]}`);
 			map.flyTo(e.latlng, map.getZoom()); // Center the map on the location
 		  });
 		  setFetchLocation(false)
@@ -28,6 +35,24 @@ const LeafletMap = () => {
 	  
 		return null;
 	  }
+	useEffect(() => {
+        osmAddress.get('/reverse', {
+            params: {
+                format: 'jsonv2',
+                lat: leto[0],
+                lon: leto[1],
+            }
+        })
+        // axios.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=-7.557327198772382&lon=110.84773870390242')
+        .then((response) => {
+            console.log(response)
+			setcustInfo({
+				packet : '50 Mbps',
+				address: `${response.data.address.village}, ${response.data.address.municipality}, ${response.data.address.city}, ${response.data.address.postcode}`
+			})
+			console.log(custInfo)
+        })
+    }, [leto])
 
 	// API for get address by coordinates : 
 	// https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=-7.557327198772382&lon=110.84773870390242
@@ -35,6 +60,15 @@ const LeafletMap = () => {
         <>
 		<button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
 		<small className='text-txt text-center'></small>
+		<div className="checks">
+			<div className="detail">
+				<h1>Your Request : </h1>
+				<p>Your address : </p>
+				<p>Packet : 50 Mbps</p>
+				<p>Price : Rp 200.000</p>
+				<p>Distance : 50 m</p>
+			</div>
+		</div>
 		<div id='map' className="m-auto w-4/5">
 		  <MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={20} className='h-10'>
 			<TileLayer
