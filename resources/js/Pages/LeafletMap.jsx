@@ -60,28 +60,28 @@ const LeafletMap = () => {
         <>
 		<button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
 		<small className='text-txt text-center'></small>
-		<div className="checks">
+		<div className={ custInfo.address ? `checks text-txt md:flex sm:block justify-evenly items-center` : 'hidden'}>
 			<div className="detail">
-				<h1>Your Request : </h1>
-				<p>Your address : </p>
+				<h1 className='text-2xl'>Your Request : </h1>
+				<p>Your address : { custInfo.address ? custInfo.address : 'empty' }</p>
 				<p>Packet : 50 Mbps</p>
-				<p>Price : Rp 200.000</p>
 				<p>Distance : 50 m</p>
+				<p>Price : </p>
 			</div>
-		</div>
-		<div id='map' className="m-auto w-4/5">
-		  <MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={20} className='h-10'>
-			<TileLayer
-			  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-			  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-			/>
-			<Marker position={[-7.604425054489175, 110.81664186804254]}>
-				<Popup>
-					A pretty CSS3 popup. <br /> Easily customizable.
-				</Popup>
-			</Marker>
-			<LocationMarker fetchLocation={fetchLocation} />
-		  </MapContainer>
+			<div id='map' className="w-1/3 h-1/3">
+			<MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={16} className='h-10'>
+				<TileLayer
+				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+				/>
+				<Marker position={[-7.604425054489175, 110.81664186804254]}>
+					<Popup>
+						A pretty CSS3 popup. <br /> Easily customizable.
+					</Popup>
+				</Marker>
+				<LocationMarker fetchLocation={fetchLocation} />
+			</MapContainer>
+			</div>
 		</div>
         </>
      );
