@@ -16,7 +16,7 @@ Route::get('/', function () {
     return inertia('Home', ['packet' => $packet]);
 });
 
-Route::get('/crud', function() {
+Route::get('/crud', function () {
     return inertia('Crud');
 });
 
@@ -24,6 +24,9 @@ Route::get('/leaflet', function () {
     return inertia('Leaflet');
 });
 
-Route::post('/register-req', function() {
+Route::post('/register-req', function () {
     return inertia('Register');
+});
+Route::get('/tryosm', function () {
+    return inertia('Osm');
 });

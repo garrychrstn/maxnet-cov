@@ -2,7 +2,7 @@ import { MapContainer } from 'react-leaflet/MapContainer'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
 import { useState } from 'react'
-import axios from 'axios'
+import osmAddress from '../osmAdress'
 
 const LeafletMap = () => {
 	const [ltd, setLtd] = useState();
