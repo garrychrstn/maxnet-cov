@@ -1,19 +1,14 @@
 import { MapContainer } from 'react-leaflet/MapContainer'
 import { TileLayer } from 'react-leaflet/TileLayer'
 import { Circle, Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import osmAddress from '../osmAdress'
+import { RequestContext } from './Home'
 
 const LeafletMap = () => {
 	const [leto, setleto] = useState([]);
 	const [fetchLocation, setFetchLocation] = useState(false);
-	const [custInfo, setcustInfo] = useState({
-		packet : undefined,
-		address : undefined,
-		distance : undefined,
-		initial_price : undefined,
-		status : undefined
-	})
+	const [custRequest, setCustRequest] = useContext(RequestContext)
 	let box_distributions = [
 		{ name : 'pos1', la: '-7.588965925268359', long: '110.78278201288234'},
 		{ name : 'pos2', la: '-7.588473143069318', long: '110.78443027116379'},
@@ -29,6 +24,12 @@ const LeafletMap = () => {
 		});
 		console.log(`shortest : ${Math.min.apply(null, totalDist).toFixed(2)}`);
 		return Math.min.apply(null, totalDist).toFixed(2)
+	}
+	function calcPrice(dist) {
+		let price
+		if (dist > 270) {
+			price = (dist - 270) * 2000
+		}
 	}
 
 	const handleLocationClick = () => {
@@ -59,14 +60,14 @@ const LeafletMap = () => {
         // axios.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=-7.557327198772382&lon=110.84773870390242')
         .then((response) => {
             console.log(response)
-			setcustInfo({
+			setCustRequest({
 				packet : '50 Mbps',
 				address: `${response.data.address.village}, ${response.data.address.municipality}, ${response.data.address.town}, ${response.data.address.city}, ${response.data.address.postcode}`,
 				distance : calcDistToBox(leto[0], leto[1]),
 				initial_price : undefined,
 				status : undefined
 			})
-			console.log(custInfo)
+			console.log(custRequest)
         })
     }, [leto])
 
@@ -76,12 +77,12 @@ const LeafletMap = () => {
         <>
 		<button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
 		<small className='text-txt text-center'></small>
-		<div className={ custInfo.address ? `checks text-txt md:block sm:block` : 'hidden'}>
+		<div className={ custRequest.address ? `checks text-txt md:block sm:block` : 'hidden'}>
 			<div className="detail">
 				<h1 className='text-2xl'>Your Request : </h1>
-				<p>Your address : { custInfo.address ? custInfo.address : 'empty' }</p>
+				<p>Your address : { custRequest.address ? custRequest.address : 'empty' }</p>
 				<p>Packet : 50 Mbps</p>
-				<p>Distance : { custInfo.distance ? `${custInfo.distance} m` : 'calculating...'}</p>
+				<p>Distance : { custRequest.distance ? `${custRequest.distance} m` : 'calculating...'}</p>
 				<p>Price : </p>
 			</div>
 			<div id='map' className="">
