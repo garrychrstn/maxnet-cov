@@ -30,6 +30,6 @@ Route::post('/register-req', function () {
 Route::get('/tryosm', function () {
     return inertia('Osm');
 });
-// Route::get('/trytrip', function() {
-//     return inertia('TryTrip');
-// });
+Route::get('/circle', function () {
+    return inertia('TryCircle');
+});

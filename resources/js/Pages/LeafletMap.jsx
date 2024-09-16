@@ -1,6 +1,6 @@
 import { MapContainer } from 'react-leaflet/MapContainer'
 import { TileLayer } from 'react-leaflet/TileLayer'
-import { Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
+import { Circle, Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
 import { useState, useEffect } from 'react'
 import osmAddress from '../osmAdress'
 
@@ -8,14 +8,29 @@ const LeafletMap = () => {
 	const [leto, setleto] = useState([]);
 	const [fetchLocation, setFetchLocation] = useState(false);
 	const [custInfo, setcustInfo] = useState({
-		'packet' : 'undefined',
-		'address' : undefined,
+		packet : undefined,
+		address : undefined,
+		distance : undefined,
+		initial_price : undefined,
+		status : undefined
 	})
-	let array_coordinate = [
+	let box_distributions = [
 		{ name : 'pos1', la: '-7.588965925268359', long: '110.78278201288234'},
 		{ name : 'pos2', la: '-7.588473143069318', long: '110.78443027116379'},
 		{ name : 'pos3', la: '-7.588488508198645', long: '110.78355135581893'},
 	]
+	function calcDistToBox(lati, long) { 
+		let to = L.latLng(lati, long)
+		let totalDist = []
+		box_distributions.forEach(post => {
+			let from = L.latLng(post.la, post.long)
+			console.log(`${post.name} with ${to.distanceTo(from)}`);
+			totalDist.push(to.distanceTo(from))
+		});
+		console.log(`shortest : ${Math.min.apply(null, totalDist).toFixed(2)}`);
+		return Math.min.apply(null, totalDist).toFixed(2)
+	}
+
 	const handleLocationClick = () => {
 		setFetchLocation(true);
 	  };
@@ -46,7 +61,10 @@ const LeafletMap = () => {
             console.log(response)
 			setcustInfo({
 				packet : '50 Mbps',
-				address: `${response.data.address.village}, ${response.data.address.municipality}, ${response.data.address.city}, ${response.data.address.postcode}`
+				address: `${response.data.address.village}, ${response.data.address.municipality}, ${response.data.address.town}, ${response.data.address.city}, ${response.data.address.postcode}`,
+				distance : calcDistToBox(leto[0], leto[1]),
+				initial_price : undefined,
+				status : undefined
 			})
 			console.log(custInfo)
         })
@@ -58,25 +76,21 @@ const LeafletMap = () => {
         <>
 		<button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
 		<small className='text-txt text-center'></small>
-		<div className={ custInfo.address ? `checks text-txt md:flex sm:block justify-evenly items-center` : 'hidden'}>
+		<div className={ custInfo.address ? `checks text-txt md:block sm:block` : 'hidden'}>
 			<div className="detail">
 				<h1 className='text-2xl'>Your Request : </h1>
 				<p>Your address : { custInfo.address ? custInfo.address : 'empty' }</p>
 				<p>Packet : 50 Mbps</p>
-				<p>Distance : 50 m</p>
+				<p>Distance : { custInfo.distance ? `${custInfo.distance} m` : 'calculating...'}</p>
 				<p>Price : </p>
 			</div>
-			<div id='map' className="w-1/3 h-1/3">
+			<div id='map' className="">
 			<MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={16} className='h-10'>
 				<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				<Marker position={[-7.604425054489175, 110.81664186804254]}>
-					<Popup>
-						A pretty CSS3 popup. <br /> Easily customizable.
-					</Popup>
-				</Marker>
+				{/* LocationMarker will only ran when fetchLocation == true */}
 				<LocationMarker fetchLocation={fetchLocation} />
 			</MapContainer>
 			</div>
