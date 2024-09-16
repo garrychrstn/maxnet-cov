@@ -60,7 +60,7 @@ const LeafletMap = () => {
 		return null;
 	  }
 	function statusCheck(dist) {
-		if (dist > 370) {
+		if (dist > 350) {
 			return false
 		} else {
 			return true
@@ -93,16 +93,8 @@ const LeafletMap = () => {
         <>
 		<button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
 		<small className='text-txt text-center'></small>
-		<div className={ custRequest.address ? `checks text-txt md:block sm:block` : 'hidden'}>
-			<div className="detail">
-				<h1 className='text-2xl'>Your Request : </h1>
-				<p>Your address : { custRequest.address ? custRequest.address : 'empty' }</p>
-				<p>Packet : { custRequest.packet ? `${custRequest.packet} Mbps`: `choose packet `}</p>
-				<p>Estimated distance : { custRequest.distance ? `${custRequest.distance} m` : 'calculating...'}</p>
-				<p>Estimated price : <span className={ custRequest.status ? `p-2 bg-green-500` : `p-2 bg-red-600`}>{ custRequest.initial_price ? `${custRequest.initial_price}`: `choose packet `}</span></p>
-				<p>availability : <span className={ custRequest.status ? `p-2 bg-green-500` : `p-2 bg-red-600`}>{ custRequest.status ? 'AVAILABLE' : 'NOT AVAILABLE FOR THIS LOCATION'} </span></p>
-			</div>
-			<div id='map' className="">
+		<div className={ custRequest.address ? `checks text-txt sm:block bg-seco py-7 rounded-md w-4/5 m-auto md:flex justify-evenly items-center` : 'hidden'}>
+			<div id='map' className="w-1/3 h-1/3">
 			<MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={16} className='h-10'>
 				<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -111,6 +103,14 @@ const LeafletMap = () => {
 				{/* LocationMarker will only ran when fetchLocation == true */}
 				<LocationMarker fetchLocation={fetchLocation} />
 			</MapContainer>
+			</div>
+			<div className="detail">
+				<h1 className='text-3xl mb-5'>Your Request : </h1>
+				<p className='mb-3'>Your address : { custRequest.address ? custRequest.address : 'empty' }</p>
+				<p className='mb-3'>Packet : { custRequest.packet ? `${custRequest.packet} Mbps`: `choose packet `}</p>
+				<p className='mb-3'>Estimated distance : { custRequest.distance ? `${custRequest.distance} m` : 'calculating...'}</p>
+				<p className='mb-3'>Estimated price : <span className={ custRequest.status ? `before:content-['Rp_']` : `p-2 bg-red-600 rounded-md`}>{ custRequest.initial_price ? `${custRequest.initial_price}`: `choose packet `}</span></p>
+				<p className='mb-3'>Availability : <span className={ custRequest.status ? `p-2 bg-green-700 rounded-md text-white` : `p-2 bg-red-600 rounded-md`}>{ custRequest.status ? 'AVAILABLE' : 'NOT AVAILABLE FOR THIS LOCATION'} </span></p>
 			</div>
 		</div>
         </>
