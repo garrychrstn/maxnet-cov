@@ -26,9 +26,16 @@ const LeafletMap = () => {
 		return Math.min.apply(null, totalDist).toFixed(2)
 	}
 	function calcPrice(dist) {
-		let price
-		if (dist > 270) {
-			price = (dist - 270) * 2000
+		let end_price
+		if (custRequest.initial_price) {
+			if (dist > 270) {
+				end_price = custRequest.initial_price + ((dist - 270) * 2000)
+			} else {
+				end_price = custRequest.initial_price
+			}
+			return end_price
+		} else {
+			return 'choose packet'
 		}
 	}
 
@@ -60,13 +67,19 @@ const LeafletMap = () => {
         // axios.get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=-7.557327198772382&lon=110.84773870390242')
         .then((response) => {
             console.log(response)
-			setCustRequest({
-				packet : '50 Mbps',
+			setCustRequest((request) => ({
+				...request,
 				address: `${response.data.address.village}, ${response.data.address.municipality}, ${response.data.address.town}, ${response.data.address.city}, ${response.data.address.postcode}`,
 				distance : calcDistToBox(leto[0], leto[1]),
-				initial_price : undefined,
-				status : undefined
-			})
+				initial_price: calcPrice(calcDistToBox(leto[0], leto[1]))
+			}))
+			// setCustRequest({
+			// 	packet : '50 Mbps',
+			// 	address: `${response.data.address.village}, ${response.data.address.municipality}, ${response.data.address.town}, ${response.data.address.city}, ${response.data.address.postcode}`,
+			// 	distance : calcDistToBox(leto[0], leto[1]),
+			// 	initial_price : undefined,
+			// 	status : undefined
+			// })
 			console.log(custRequest)
         })
     }, [leto])
@@ -81,9 +94,9 @@ const LeafletMap = () => {
 			<div className="detail">
 				<h1 className='text-2xl'>Your Request : </h1>
 				<p>Your address : { custRequest.address ? custRequest.address : 'empty' }</p>
-				<p>Packet : 50 Mbps</p>
-				<p>Distance : { custRequest.distance ? `${custRequest.distance} m` : 'calculating...'}</p>
-				<p>Price : </p>
+				<p>Packet : { custRequest.packet ? `${custRequest.packet} Mbps`: `choose packet `}</p>
+				<p>Estimated distance : { custRequest.distance ? `${custRequest.distance} m` : 'calculating...'}</p>
+				<p>Estimated price : { custRequest.initial_price ? `Rp ${custRequest.initial_price}`: `choose packet `}</p>
 			</div>
 			<div id='map' className="">
 			<MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={16} className='h-10'>
