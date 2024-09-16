@@ -6,13 +6,11 @@ import osmAddress from '../osmAdress'
 
 const LeafletMap = () => {
 	const [leto, setleto] = useState([]);
-	const [lat, setLat] = useState();
 	const [fetchLocation, setFetchLocation] = useState(false);
 	const [custInfo, setcustInfo] = useState({
 		'packet' : 'undefined',
 		'address' : undefined,
 	})
-	let map_hidden = 'hidden'
 	let array_coordinate = [
 		{ name : 'pos1', la: '-7.588965925268359', long: '110.78278201288234'},
 		{ name : 'pos2', la: '-7.588473143069318', long: '110.78443027116379'},
