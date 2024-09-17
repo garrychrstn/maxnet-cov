@@ -13,7 +13,7 @@ const LeafletMap = () => {
 		{ name : 'pos1', la: '-7.588965925268359', long: '110.78278201288234'},
 		{ name : 'pos2', la: '-7.588473143069318', long: '110.78443027116379'},
 		{ name : 'pos3', la: '-7.588488508198645', long: '110.78355135581893'},
-		{ name : 'custom', la: '-7.596832514567988', long : '110.82126175491112'}
+		{ name : 'custom', la: '-7.596832514567988', long : '110.82126175491112'},
 	]
 	function calcDistToBox(lati, long) { 
 		let to = L.latLng(lati, long)
@@ -51,7 +51,7 @@ const LeafletMap = () => {
 		if (fetchLocation) {
 		  map.locate().on('locationfound', function (e) {
 			setleto([e.latlng.lat, e.latlng.lng])
-			console.log(`lat : ${leto[0]} & leto : ${leto[1]}`);
+			console.log(`lat : ${e.latlng.lat} & leto : ${e.latlng.lng}`);
 			map.flyTo(e.latlng, map.getZoom()); // Center the map on the location
 		  });
 		  setFetchLocation(false)
@@ -94,7 +94,7 @@ const LeafletMap = () => {
 		<button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
 		<small className='text-txt text-center'></small>
 		<div className={ custRequest.address ? `checks text-txt sm:block bg-seco py-7 rounded-md w-4/5 m-auto md:flex justify-evenly items-center` : 'hidden'}>
-			<div id='map' className="w-1/3 h-1/3">
+			<div id='map' className="md:w-1/2 h-1/3 sm:w-full sm:p-5">
 			<MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={16} className='h-10'>
 				<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -104,12 +104,12 @@ const LeafletMap = () => {
 				<LocationMarker fetchLocation={fetchLocation} />
 			</MapContainer>
 			</div>
-			<div className="detail">
+			<div className="detail w-1/3 sm:w-full sm:p-7">
 				<h1 className='text-3xl mb-5'>Your Request : </h1>
 				<p className='mb-3'>Your address : { custRequest.address ? custRequest.address : 'empty' }</p>
 				<p className='mb-3'>Packet : { custRequest.packet ? `${custRequest.packet} Mbps`: `choose packet `}</p>
 				<p className='mb-3'>Estimated distance : { custRequest.distance ? `${custRequest.distance} m` : 'calculating...'}</p>
-				<p className='mb-3'>Estimated price : <span className={ custRequest.status ? `before:content-['Rp_']` : `p-2 bg-red-600 rounded-md`}>{ custRequest.initial_price ? `${custRequest.initial_price}`: `choose packet `}</span></p>
+				<p className='mb-3'>Estimated price : <span className={ custRequest.status ? `before:content-['Rp_']` : `p-2 bg-red-600 rounded-md`}>{ custRequest.initial_price && custRequest.status ? `${custRequest.initial_price}`: `choose packet `}</span></p>
 				<p className='mb-3'>Availability : <span className={ custRequest.status ? `p-2 bg-green-700 rounded-md text-white` : `p-2 bg-red-600 rounded-md`}>{ custRequest.status ? 'AVAILABLE' : 'NOT AVAILABLE FOR THIS LOCATION'} </span></p>
 			</div>
 		</div>
