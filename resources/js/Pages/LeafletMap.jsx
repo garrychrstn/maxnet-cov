@@ -14,6 +14,7 @@ const LeafletMap = () => {
 		{ name : 'pos2', la: '-7.588473143069318', long: '110.78443027116379'},
 		{ name : 'pos3', la: '-7.588488508198645', long: '110.78355135581893'},
 		{ name : 'custom', la: '-7.596832514567988', long : '110.82126175491112'},
+		{ name : 'customsoba', la: '-7.5716', long : '110.8226'},
 	]
 	function calcDistToBox(lati, long) { 
 		let to = L.latLng(lati, long)
@@ -91,9 +92,9 @@ const LeafletMap = () => {
 	// https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=-7.557327198772382&lon=110.84773870390242
     return (
         <>
-		<button className="bg-acce px-2 py-3 rounded-md text-txt text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
+		<button className="bg-acce p-3 rounded-md text-bg text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
 		<small className='text-txt text-center'></small>
-		<div className={ custRequest.address ? `checks text-txt sm:block bg-seco py-7 rounded-md w-4/5 m-auto md:flex justify-evenly items-center` : 'hidden'}>
+		<div className={ custRequest.address ? `checks text-txt sm:block bg-seco py-7 rounded-md w-4/5 m-auto md:flex justify-evenly md:items-center` : 'hidden'}>
 			<div id='map' className="md:w-1/2 h-1/3 sm:w-full sm:p-5">
 			<MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={16} className='h-10'>
 				<TileLayer
@@ -104,7 +105,7 @@ const LeafletMap = () => {
 				<LocationMarker fetchLocation={fetchLocation} />
 			</MapContainer>
 			</div>
-			<div className="detail w-1/3 sm:w-full sm:p-7">
+			<div className="detail w-1/2 sm:w-full sm:p-7 text-bg">
 				<h1 className='text-3xl mb-5'>Your Request : </h1>
 				<p className='mb-3'>Your address : { custRequest.address ? custRequest.address : 'empty' }</p>
 				<p className='mb-3'>Packet : { custRequest.packet ? `${custRequest.packet} Mbps`: `choose packet `}</p>

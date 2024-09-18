@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,6 +16,8 @@ Route::get('/', function () {
     ];
     return inertia('Home', ['packet' => $packet]);
 });
+
+Route::resource('request', RequestController::class);
 
 Route::get('/crud', function () {
     return inertia('Crud');

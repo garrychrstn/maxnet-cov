@@ -11,11 +11,11 @@ export default {
         dark : '#1b1e28',
         ablue: '#4a007b',
         ared: '#f33656',
-        bg: '#110919',
+        bg: '#f4f4f9',
         prim: '#42006f',
         seco: '#951b2a',
         acce: '#f70f37',
-        txt: '#ecddf9'
+        txt: '#0e0d1c'
       }},
   },
   plugins: [],

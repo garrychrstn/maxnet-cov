@@ -2,8 +2,8 @@
 
 const Nav = () => {
     return ( 
-        <div className="navigation sticky top-0 bg-bg">
-            <div className="slogan">
+        <div className="navigation sticky top-0 bg-bg border-2 border-b-acce">
+            <div className="slogan bg-">
                 <ul className='flex justify-around text-sm pt-2'>
                     <li className='text-ablue'>#maximum<span className='text-ared'>speed</span></li>
                     <li className='text-ablue'>#maximum<span className='text-ared'>care</span></li>

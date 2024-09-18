@@ -3,6 +3,7 @@ import Plan from "./Components/Plan";
 import LeafletMap from "./LeafletMap.jsx";
 import { useMap, useMapEvents } from "react-leaflet";
 import React, { useState } from "react";
+import Registrasion from "./Registrastion.jsx";
 export const RequestContext = React.createContext();
 
 const Home = ({ packet }) => {
@@ -53,7 +54,7 @@ const Home = ({ packet }) => {
                     <h1 className="text-txt text-2xl m-auto text-center mb-7">Check our availability</h1>
                     <LeafletMap />
                 </div>
-                <div id="map" className="min-h-20"></div>
+                <Registrasion className={ custRequest.info ? `block m-auto w-4/5` : `hidden`}/>
                 <div className="footer min-h-5 mt-20 bg-prim p-10">
                     <p className="text-center text-txt">Copyright by Maxnet+</p>
                 </div>
