@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Request extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nama',
+        'email',
+        'alamat',
+        'notel',
+        'nik',
+        'ktp',
+        'password',
+        'coordinate'
+    ];
 }
