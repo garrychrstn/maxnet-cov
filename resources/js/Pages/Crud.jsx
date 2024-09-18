@@ -20,7 +20,7 @@ const Crud = () => {
       
     return ( 
         <>
-            <form onSubmit={submit}>
+            <form onSubmit={submit} encType='multipart/form-data'>
                 <input className='block rounded-md mb-7 px-2 py-2' type="text" value={data.nama} onChange={e => setData('nama', e.target.value)} placeholder='nama'/>
                 {errors.nama && <div>{errors.nama}</div>}
 
