@@ -4,10 +4,13 @@ import LeafletMap from "./LeafletMap.jsx";
 import { useMap, useMapEvents } from "react-leaflet";
 import React, { useState } from "react";
 import Registration from "./Registration.jsx";
+import RegisComplete from "./Components/RegisComplete.jsx";
 export const RequestContext = React.createContext();
 export const LetoContext = React.createContext();
+export const SubReq = React.createContext();
 
 const Home = ({ packet }) => {
+    const [submitted, setSubmitted] = useState(false)
     const [custRequest, setCustRequest] = useState({
 		packet : undefined,
 		address : undefined,
@@ -21,15 +24,16 @@ const Home = ({ packet }) => {
 	
     function ShowRegis() {
         // console.log('function is run');
-        if (custRequest.status == true) {
+        if (custRequest.status == true && submitted == false) {
             return <Registration />
-        } else {
-
+        } else if ( submitted == true ) {
+            return <RegisComplete />
         }
     }
     return ( 
         <>  
             <RequestContext.Provider value={[custRequest, setCustRequest]}>
+                <SubReq.Provider value={[submitted, setSubmitted]}>
                 <LetoContext.Provider value={[leto, setLeto]}>
                     <Nav />
                     <div className="hero text-center mt-10 text-5xl text-txt mb-12">
@@ -54,6 +58,7 @@ const Home = ({ packet }) => {
                         <p className="text-center text-txt">Copyright by Maxnet+</p>
                     </div>
                 </LetoContext.Provider>
+                </SubReq.Provider>
             </RequestContext.Provider>
         </>
      );

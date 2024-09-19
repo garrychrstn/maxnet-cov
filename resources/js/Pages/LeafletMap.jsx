@@ -94,7 +94,7 @@ const LeafletMap = () => {
         <>
 		<button className="bg-acce p-3 rounded-md text-bg text-md block m-auto mb-10" onClick={handleLocationClick}>CHECK LOCATION</button>
 		<small className='text-txt text-center'></small>
-		<div className={ custRequest.address ? `checks text-txt sm:block bg-seco py-7 rounded-md w-4/5 m-auto md:flex justify-evenly md:items-center` : 'hidden'}>
+		<div className={ custRequest.address ? `checks text-txt sm:block bg-seco py-7 rounded-md w-4/5 m-auto md:flex justify-evenly md:items-center mb-7` : 'hidden'}>
 			<div id='map' className="md:w-1/2 h-1/3 sm:w-full sm:p-5">
 			<MapContainer center={[-7.604425054489175, 110.81664186804254]} zoom={16} className='h-10'>
 				<TileLayer

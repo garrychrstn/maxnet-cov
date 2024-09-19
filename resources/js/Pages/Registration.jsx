@@ -1,11 +1,14 @@
 import { useContext, useEffect } from "react";
-import { LetoContext, RequestContext } from "./Home";
+import { LetoContext, RequestContext, SubReq } from "./Home";
 import { useForm } from "@inertiajs/react";
+import RegisComplete from "./Components/RegisComplete";
+import { useState } from "react";
 
 const Registration = () => {
-    let available 
+    const [visibility, setVisibility] = useState(true) 
     const [custRequest, setCustRequest] = useContext(RequestContext);
     const [leto, setLeto] = useContext(LetoContext)
+    const [submitted, setSubmitted] = useContext(SubReq)
     const { data, setData, post, processing, errors } = useForm({
         nama: '',//
         email: '',//
@@ -27,6 +30,8 @@ const Registration = () => {
       function submit(e) {
         e.preventDefault()
         post('/request')
+        setVisibility(false)
+        setSubmitted(true)
       }
       const sk = [
         "1) Sistem pembayaran adalah Pra bayar untuk setiap bulannya, dimulai ketika layanan internet mulai aktif.",
@@ -43,7 +48,7 @@ const Registration = () => {
       ]
     return ( 
         <>
-            <div className="container w-1/2 m-auto mt-10 ">
+            <div className={ visibility ? `container w-1/2 m-auto mt-17` : 'hidden'}>
                 <h1 className="text-2xl text-center mb-7">REGISTRASI PEMASANGAN BARU</h1>
                 <div className="sk">
                     <h1>Syarat & Ketentuan</h1>
