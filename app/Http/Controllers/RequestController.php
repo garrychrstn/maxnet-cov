@@ -21,7 +21,7 @@ class RequestController extends Controller
      */
     public function create()
     {
-        
+
         return inertia('Crud');
     }
 
@@ -36,11 +36,12 @@ class RequestController extends Controller
             'alamat' => ['required'],
             'notel' => ['required'],
             'nik' => ['required'],
+            // VALIDATING THAT FILE BEING SUBMITTED IS OF JPG AND PNG
             'ktp' => ['required', 'file', 'mimes:jpeg,jpg,png', 'max:2048'],
             'password' => ['required'],
             'coordinate' => ['required'],
         ]);
-
+        // SECOND VALIDATION. 
         if ($request->hasFile('ktp')) {
             $file = $request->file('ktp');
             $fileName = time() . '_' . $file->getClientOriginalName();

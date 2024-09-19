@@ -27,8 +27,8 @@ Route::get('/leaflet', function () {
     return inertia('Leaflet');
 });
 
-Route::post('/register-req', function () {
-    return inertia('Register');
+Route::get('/register-req', function () {
+    return inertia('Registration');
 });
 Route::get('/tryosm', function () {
     return inertia('Osm');

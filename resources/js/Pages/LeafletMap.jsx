@@ -3,10 +3,10 @@ import { TileLayer } from 'react-leaflet/TileLayer'
 import { Circle, Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
 import { useState, useEffect, useContext } from 'react'
 import osmAddress from '../osmAdress'
-import { RequestContext } from './Home'
+import { RequestContext, LetoContext } from './Home'
 
 const LeafletMap = () => {
-	const [leto, setleto] = useState([]);
+	const [leto, setLeto] = useContext(LetoContext);
 	const [fetchLocation, setFetchLocation] = useState(false);
 	const [custRequest, setCustRequest] = useContext(RequestContext)
 	let box_distributions = [
@@ -51,7 +51,7 @@ const LeafletMap = () => {
 	  
 		if (fetchLocation) {
 		  map.locate().on('locationfound', function (e) {
-			setleto([e.latlng.lat, e.latlng.lng])
+			setLeto([e.latlng.lat, e.latlng.lng])
 			console.log(`lat : ${e.latlng.lat} & leto : ${e.latlng.lng}`);
 			map.flyTo(e.latlng, map.getZoom()); // Center the map on the location
 		  });
