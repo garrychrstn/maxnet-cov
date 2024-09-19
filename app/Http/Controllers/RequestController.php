@@ -21,6 +21,7 @@ class RequestController extends Controller
      */
     public function create()
     {
+        
         return inertia('Crud');
     }
 
@@ -35,12 +36,22 @@ class RequestController extends Controller
             'alamat' => ['required'],
             'notel' => ['required'],
             'nik' => ['required'],
-            'ktp' => ['required'],
+            'ktp' => ['required', 'file', 'mimes:jpeg,jpg,png', 'max:2048'],
             'password' => ['required'],
             'coordinate' => ['required'],
         ]);
+
+        if ($request->hasFile('ktp')) {
+            $file = $request->file('ktp');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads', $fileName, 'public');
+            $data['ktp'] = $filePath;
+        }
+
         $data['password'] = bcrypt($data['password']);
         Request::create($data);
+
+        return redirect()->back()->with('success', 'data submitted');
     }
 
     /**
