@@ -55,7 +55,7 @@ const Home = ({ packet }) => {
                     { ShowRegis() }
                     {/* <Registration className={ custRequest.status ? `block m-auto w-4/5` : `hidden`}/> */}
                     <div className="footer min-h-5 mt-20 bg-prim p-10">
-                        <p className="text-center text-txt">Copyright by Maxnet+</p>
+                        <p className="text-center text-white">Copyright by Maxnet+</p>
                     </div>
                 </LetoContext.Provider>
                 </SubReq.Provider>

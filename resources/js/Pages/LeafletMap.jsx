@@ -76,10 +76,18 @@ const LeafletMap = () => {
             }
         })
         .then((response) => {
+			let cleanAddress = ''
+			let caCate = ['road', 'village', 'city', 'state', 'postcode']
+			for (let detail in response.data.address) {
+				if (caCate.indexOf(detail) === -1 ) { // IF ADDERSS CATEGORY IS NOT COMPLIANT TO THE caCate, then SKIP
+				} else {
+					cleanAddress += `${response.data.address[detail]}, `
+				}
+			}
             console.log(response)
 			setCustRequest((request) => ({
 				...request,
-				address: `${response.data.address.village}, ${response.data.address.municipality}, ${response.data.address.town}, ${response.data.address.city}, ${response.data.address.postcode}`,
+				address: cleanAddress,
 				distance : calcDistToBox(leto[0], leto[1]),
 				initial_price: calcPrice(calcDistToBox(leto[0], leto[1])),
 				status: statusCheck(calcDistToBox(leto[0], leto[1]))
