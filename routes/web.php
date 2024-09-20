@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,3 +37,7 @@ Route::get('/tryosm', function () {
 Route::get('/circle', function () {
     return inertia('TryCircle');
 });
+
+Route::post('login/sent', UserController::class, 'login');
+
+Route::get('login', UserController::class, 'showlogin');
