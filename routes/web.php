@@ -3,8 +3,11 @@
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
+
+    $user = Auth::user();
     $packet = [
         'packet_name' => 'Promo Merdeka',
         'detail' => [
@@ -15,7 +18,11 @@ Route::get('/', function () {
             ['speed' => 50, 'price' => 250000],
         ]
     ];
-    return inertia('Home', ['packet' => $packet]);
+    if ($user) {
+        return inertia('Dashboard', ['packet' => $packet, 'user' => $user]);
+    } else {
+        return inertia('Home', ['packet' => $packet, 'user' => $user]);
+    }
 });
 
 Route::resource('request', RequestController::class);
