@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from 'react'
 import osmAddress from '../osmAdress'
 import { RequestContext, LetoContext } from './Home'
 
-const LeafletMap = () => {
+const LeafletMap = ({ sites }) => {
 	const [leto, setLeto] = useContext(LetoContext);
 	const [fetchLocation, setFetchLocation] = useState(false);
 	const [custRequest, setCustRequest] = useContext(RequestContext)
@@ -16,16 +16,45 @@ const LeafletMap = () => {
 		{ name : 'custom', la: '-7.596832514567988', long : '110.82126175491112'},
 		{ name : 'customsoba', la: '-7.5716', long : '110.8226'},
 	]
+
+	console.log(`sites : ${sites}`)
+
+	function prepareLat(coor) {
+		coor = coor.replace(/\s/g, ""); // remove whitespaces from query
+		return coor.split(',')[0] // return array object of coordinate
+	}
+	function prepareLong(coor) {
+		coor = coor.replace(/\s/g, ""); // remove whitespaces from query
+		return coor.split(',')[1] // return array object of coordinate
+	}
 	function calcDistToBox(lati, long) { 
 		let to = L.latLng(lati, long)
 		let totalDist = []
+		let odps = []
+		console.log(`starting calculation to coordinate ${to}`)
+		//
+		// GET ODP FROM DATABASE
+		console.log(`TEST FUNCTION PREPARE LAT ${prepareLat(sites[0].site_location_maps)}`)
+		
+		sites.forEach(site => {
+			let from = L.latLng(prepareLat(site.site_location_maps), prepareLong(site.site_location_maps))
+			totalDist.push(to.distanceTo(from));
+			odps.push({odp : site.site_name, distance : to.distanceTo(from)})
+
+		})
+		// look for CLOSEST ODP by comparing data between site.distance and lowest number of totalDist array
+		let closest_odp = odps.filter((site) => site.distance === Math.min.apply(null, totalDist))
+		console.log(`CALCULATED FOR ODP : ${closest_odp[0].odp} with distance of ${closest_odp[0].distance}`)
+		return Math.min.apply(null, totalDist).toFixed(2)
+
+		// THIS ONE USES DUMMY
 		box_distributions.forEach(post => {
 			let from = L.latLng(post.la, post.long)
 			console.log(`${post.name} with ${to.distanceTo(from)}`);
 			totalDist.push(to.distanceTo(from))
 		});
-		console.log(`shortest : ${Math.min.apply(null, totalDist).toFixed(2)}`);
-		return Math.min.apply(null, totalDist).toFixed(2)
+		// console.log(`shortest : ${Math.min.apply(null, totalDist).toFixed(2)}`);
+		// return Math.min.apply(null, totalDist).toFixed(2)
 	}
 	function calcPrice(dist) {
 		let end_price

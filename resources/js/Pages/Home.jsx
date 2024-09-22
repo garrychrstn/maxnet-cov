@@ -10,13 +10,12 @@ export const RequestContext = React.createContext();
 export const LetoContext = React.createContext();
 export const SubReq = React.createContext();
 
-const Home = ({ packet, user }) => {
+const Home = ({ sites, packet, user }) => {
     
     if (user) {
         console.log(`logged in by : ${user.name}`);
     } else {
         console.log(`not logged in : ${user}`);
-        
     }
     const [submitted, setSubmitted] = useState(false)
     const [custRequest, setCustRequest] = useState({
@@ -57,7 +56,7 @@ const Home = ({ packet, user }) => {
                     </div>
                     <div className="tool-cov w-3/4 mx-auto mt-20">
                         <h1 className="text-txt text-2xl m-auto text-center mb-7">Check our availability</h1>
-                        <LeafletMap />
+                        <LeafletMap sites={ sites } />
                     </div>
                     { console.log(`status : ${custRequest.status}`) }
                     { ShowRegis() }

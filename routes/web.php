@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
+use App\Models\Site;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
+    
+    $sites = Site::all();
 
     $user = Auth::user();
     $packet = [
@@ -19,9 +22,9 @@ Route::get('/', function () {
         ]
     ];
     if ($user) {
-        return inertia('Dashboard', ['packet' => $packet, 'user' => $user]);
+        return inertia('Dashboard', ['packet' => $packet, 'user' => $user, 'sites' => $sites]);
     } else {
-        return inertia('Home', ['packet' => $packet, 'user' => $user]);
+        return inertia('Home', ['packet' => $packet, 'user' => $user, 'sites' => $sites]);
     }
 });
 
