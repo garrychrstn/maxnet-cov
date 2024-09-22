@@ -38,6 +38,10 @@ Route::get('/circle', function () {
     return inertia('TryCircle');
 });
 
-Route::post('login/sent', UserController::class, 'login');
+Route::post('login/sent', [UserController::class, 'login']);
 
-Route::get('login', UserController::class, 'showlogin');
+Route::get('login', [UserController::class, 'showlogin']);
+
+Route::post('/regis/sent', [UserController::class, 'register']);
+
+Route::get('register', [UserController::class, 'showreg']);

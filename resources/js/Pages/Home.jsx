@@ -5,6 +5,7 @@ import { useMap, useMapEvents } from "react-leaflet";
 import React, { useState } from "react";
 import Registration from "./Registration.jsx";
 import RegisComplete from "./Components/RegisComplete.jsx";
+import Footer from "./Components/Footer.jsx";
 export const RequestContext = React.createContext();
 export const LetoContext = React.createContext();
 export const SubReq = React.createContext();
@@ -54,9 +55,7 @@ const Home = ({ packet }) => {
                     { console.log(`status : ${custRequest.status}`) }
                     { ShowRegis() }
                     {/* <Registration className={ custRequest.status ? `block m-auto w-4/5` : `hidden`}/> */}
-                    <div className="footer min-h-5 mt-20 bg-prim p-10">
-                        <p className="text-center text-white">Copyright by Maxnet+</p>
-                    </div>
+                    <Footer />
                 </LetoContext.Provider>
                 </SubReq.Provider>
             </RequestContext.Provider>

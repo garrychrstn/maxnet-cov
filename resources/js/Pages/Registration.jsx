@@ -69,7 +69,7 @@ const Registration = () => {
                     {errors.email && <div>{errors.email}</div>}
                     
                     <label>Alamat : </label>
-                    <input className='w-full block rounded-md mb-7 px-2 py-2 mt-3' type="text" placeholder={ data.alamat } value={ data.alamat } />
+                    <input className='w-full block rounded-md mb-7 px-2 py-2 mt-3 bg-gray-300 text-gray-500 cursor-not-allowed' type="text" placeholder={ data.alamat } value={ data.alamat } />
                     {errors.alamat && <div>{errors.alamat}</div>}
 
                     <label>No Telepon (Whatsapp) : </label>
@@ -85,7 +85,7 @@ const Registration = () => {
                     {errors.password && <div>{errors.password}</div>}
 
                     <label>Koordinate Pemasangan : </label>
-                    <input className='w-full block rounded-md mb-7 px-2 py-2 mt-3' type="text" value={ data.coordinate } placeholder={ data.coordinate }  />
+                    <input className='w-full block rounded-md mb-7 px-2 py-2 mt-3 bg-gray-300  text-gray-500 cursor-not-allowed' type="text" value={ data.coordinate } placeholder={ data.coordinate }  />
                     {errors.coordinate && <div>{errors.coordinate}</div>}
 
                     <label>Foto KTP : </label>

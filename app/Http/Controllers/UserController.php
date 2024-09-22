@@ -10,14 +10,15 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function login(Request $r) {
+    public function login(Request $r)
+    {
         $user = $r->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
         if (Auth::attempt($user)) {
             $r->session()->regenerate();
-            
+
             return redirect()->intended();
         }
 
@@ -26,7 +27,26 @@ class UserController extends Controller
         ])->onlyInput('username');
     }
 
-    public function showlogin() {
+    public function showlogin()
+    {
         return inertia('Login');
+    }
+
+    public function register(Request $r)
+    {
+        $req = $r->validate([
+            'name' => 'required|unique:users,name',
+            'email' => 'required|unique:users,email',
+            'password' => 'required'
+        ]);
+
+        $req['password'] = bcrypt($req['password']);
+        User::create($req);
+        return back()->with('success', 'success regis');
+    }
+
+    public function showreg()
+    {
+        return inertia('Register');
     }
 }
