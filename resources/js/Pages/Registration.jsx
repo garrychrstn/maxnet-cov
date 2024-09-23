@@ -16,6 +16,7 @@ const Registration = () => {
         notel: '', //
         nik: '', //
         ktp: null, //
+        foto_rumah: null,
         coordinate: '',
         password: '', //
       })
@@ -91,6 +92,10 @@ const Registration = () => {
                     <label>Foto KTP : </label>
                     <input className='w-full block rounded-md mb-7 px-2 py-2 mt-3' type="file" onChange={e => setData('ktp', e.target.files[0])} />
                     {errors.ktp && <div>{errors.ktp}</div>}
+
+                    <label>Foto Rumah : </label>
+                    <input className='w-full block rounded-md mb-7 px-2 py-2 mt-3' type="file" onChange={e => setData('foto_rumah', e.target.files[0])} />
+                    {errors.foto_rumah && <div>{errors.foto_rumah}</div>}
                     
                     <button type="submit" disabled={processing}>register</button>
                 </form>

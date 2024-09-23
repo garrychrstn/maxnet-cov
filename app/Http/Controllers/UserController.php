@@ -26,7 +26,7 @@ class UserController extends Controller
             'username' => 'credential does not match with our record'
         ])->onlyInput('username');
     }
-
+    
     public function register(Request $r)
     {
         $req = $r->validate([

@@ -38,15 +38,26 @@ class RequestController extends Controller
             'nik' => ['required'],
             // VALIDATING THAT FILE BEING SUBMITTED IS OF JPG AND PNG
             'ktp' => ['required', 'file', 'mimes:jpeg,jpg,png', 'max:2048'],
+            'foto_rumah' => ['required', 'file', 'mimes:jpeg,jpg,png', 'max:2048'],
             'password' => ['required'],
             'coordinate' => ['required'],
         ]);
         // SECOND VALIDATION. 
+
+        // FILE IS STORED INSIDE STORAGE/APP/PUBLIC/UPLOADS
+        
         if ($request->hasFile('ktp')) {
             $file = $request->file('ktp');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $filePath = $file->storeAs('uploads', $fileName, 'public');
             $data['ktp'] = $filePath;
+        }
+
+        if ($request->hasFile('foto_rumah')) {
+            $file = $request->file('foto_rumah');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads', $fileName, 'public');
+            $data['foto_rumah'] = $filePath;
         }
 
         $data['password'] = bcrypt($data['password']);
